@@ -3,11 +3,11 @@ let playerScore = 0;
 let computerSelection;
 let playerSelection;
 let roundResults;
-gamePlay();
+playGame();
 
-function gamePlay() {
+function playGame() {
    let playcount = 0;
-      while (playcount < 5) {
+   while (playcount < 5) {
       computerPlay();
       selectprompt();
       playRound(playerSelection, computerSelection);
@@ -27,7 +27,7 @@ function gamePlay() {
       if (winrestart == "yes") {
          computerScore = 0;
          playerScore = 0;
-         gamePlay();
+         playGame();
       }
    }
    else {
@@ -36,22 +36,22 @@ function gamePlay() {
       if (restartselect == "yes") {
          computerScore = 0;
          playerScore = 0;
-         gamePlay();
+         playGame();
       }
    }
 }
 
 function computerPlay() {
-    const playnumber = Math.floor(Math.random() * 100);
-    if (playnumber <= 32) {
+   const playnumber = Math.floor(Math.random() * 100);
+   if (playnumber <= 32) {
       return computerSelection = "rock";
-    } 
-    else if (playnumber >= 33 && playnumber <= 65) {
+   }
+   else if (playnumber >= 33 && playnumber <= 65) {
       return computerSelection = "paper";
-    }
-    else {
+   }
+   else {
       return computerSelection = "scissors";
-    }
+   }
 }
 
 function selectprompt() {
@@ -64,7 +64,7 @@ function selectprompt() {
    selection = selection.toLowerCase();
    if (selection == "rock" || selection == "paper" || selection == "scissors") {
       return playerSelection = selection;
-   } 
+   }
    else {
       alert("Sorry. That's not a valid selection.");
       selectprompt();
@@ -72,38 +72,38 @@ function selectprompt() {
 }
 
 function playRound(playerSelection, computerSelection) {
-     if (playerSelection == computerSelection) {
-        alert("Tie Round.");
-        return roundResults = "tie";
-     }
-     else if ((playerSelection == "rock" || computerSelection == "rock") &&
-       (playerSelection == "paper" || computerSelection == "paper")) {
-         if (playerSelection == "paper") {
-            alert("Congratulations! Paper covers Rock!");
-            return roundResults = "player";
-         }
-         else {
-            alert("Try again. Paper covers Rock.");
-            return roundResults = "cpu"
-         } 
+   if (playerSelection == computerSelection) {
+      alert("Tie Round.");
+      return roundResults = "tie";
+   }
+   else if ((playerSelection == "rock" || computerSelection == "rock") &&
+      (playerSelection == "paper" || computerSelection == "paper")) {
+      if (playerSelection == "paper") {
+         alert("Congratulations! Paper covers Rock!");
+         return roundResults = "player";
       }
-      else if ((playerSelection == "rock" || computerSelection == "rock") &&
-       (playerSelection == "scissors"|| computerSelection == "scissors")) {
-         if (playerSelection == "rock") {
-            alert("Congratulations! Rock smashes Scissors!");
-            return roundResults = "player";
-         }
-         else {
-            alert("Try again. Rock smashes Scissors.");
-            return roundResults = "cpu"
-         } 
+      else {
+         alert("Try again. Paper covers Rock.");
+         return roundResults = "cpu"
       }
-      else if (playerSelection == "scissors") {
-            alert("Congratulations! Scissors cuts Paper!");
-            return roundResults = "player";
-         }
-         else {
-            alert("Try again. Scissors cuts Paper.");
-            return roundResults = "cpu"
-         } 
+   }
+   else if ((playerSelection == "rock" || computerSelection == "rock") &&
+      (playerSelection == "scissors" || computerSelection == "scissors")) {
+      if (playerSelection == "rock") {
+         alert("Congratulations! Rock smashes Scissors!");
+         return roundResults = "player";
+      }
+      else {
+         alert("Try again. Rock smashes Scissors.");
+         return roundResults = "cpu"
+      }
+   }
+   else if (playerSelection == "scissors") {
+      alert("Congratulations! Scissors cuts Paper!");
+      return roundResults = "player";
+   }
+   else {
+      alert("Try again. Scissors cuts Paper.");
+      return roundResults = "cpu"
+   }
 }
