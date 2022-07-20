@@ -1,109 +1,91 @@
-let computerScore = 0;
+let currentRound = 1;
 let playerScore = 0;
-let computerSelection;
-let playerSelection;
-let roundResults;
-playGame();
-
-function playGame() {
-   let playcount = 0;
-   while (playcount < 5) {
-      computerPlay();
-      selectprompt();
-      playRound(playerSelection, computerSelection);
-      if (roundResults == "player") {
-         playerScore = ++playerScore;
-         playcount = ++playcount;
-      }
-      else if (roundResults == "cpu") {
-         computerScore = ++computerScore;
-         playcount = ++playcount;
-      }
-   }
-   if (playerScore > computerScore) {
-      alert(`congratulations! you won the game!
-      Score: ${playerScore} - ${computerScore}`);
-      let winrestart = prompt("do you want to try again?", "yes");
-      if (winrestart == "yes") {
-         computerScore = 0;
-         playerScore = 0;
-         playGame();
-      }
-   }
-   else {
-      let restartselect = prompt(`Sorry. You lost. Do you want to try again?
-      Score: ${computerScore} - ${playerScore}`, "yes");
-      if (restartselect == "yes") {
-         computerScore = 0;
-         playerScore = 0;
-         playGame();
-      }
-   }
-}
+let cpuScore = 0;
+const buttons = document.querySelectorAll("button");
+buttons.forEach((button) => {
+   button.addEventListener("click", playRound);
+});
+const round = document.querySelector("#round");
+const roundResults = document.querySelector("#roundResults");
+const humanScore = document.querySelector("#humanScore");
+const computerScore = document.querySelector("#cpuScore");
+const gameResults = document.querySelector("#gameResults");
+round.textContent = `Round ${currentRound}`;
+humanScore.textContent = `player =${playerScore}`;
+computerScore.textContent = `CPU =${cpuScore}`;
 
 function computerPlay() {
    const playnumber = Math.floor(Math.random() * 100);
    if (playnumber <= 32) {
-      return computerSelection = "rock";
+      return "rock";
    }
    else if (playnumber >= 33 && playnumber <= 65) {
-      return computerSelection = "paper";
+      return "paper";
    }
    else {
-      return computerSelection = "scissors";
+      return "scissors";
    }
 }
 
-function selectprompt() {
-   let selection = prompt("Rock, Paper, or Scissors?", "rock");
-   if (selection == null) {
-      alert("To quit close the page.");
-      selection = "rock"
-      selectprompt();
-   }
-   selection = selection.toLowerCase();
-   if (selection == "rock" || selection == "paper" || selection == "scissors") {
-      return playerSelection = selection;
-   }
-   else {
-      alert("Sorry. That's not a valid selection.");
-      selectprompt();
-   }
-}
-
-function playRound(playerSelection, computerSelection) {
+function playRound() {
+   let playerSelection = ...
+   let computerSelection = computerPlay();
    if (playerSelection == computerSelection) {
-      alert("Tie Round.");
-      return roundResults = "tie";
+      keepScore("tie");
    }
    else if ((playerSelection == "rock" || computerSelection == "rock") &&
       (playerSelection == "paper" || computerSelection == "paper")) {
       if (playerSelection == "paper") {
-         alert("Congratulations! Paper covers Rock!");
-         return roundResults = "player";
+         keepScore("player");
       }
       else {
-         alert("Try again. Paper covers Rock.");
-         return roundResults = "cpu"
+         keepScore("cpu");
       }
    }
    else if ((playerSelection == "rock" || computerSelection == "rock") &&
       (playerSelection == "scissors" || computerSelection == "scissors")) {
       if (playerSelection == "rock") {
-         alert("Congratulations! Rock smashes Scissors!");
-         return roundResults = "player";
+         keepScore("player");
       }
       else {
-         alert("Try again. Rock smashes Scissors.");
-         return roundResults = "cpu"
+         keepScore("cpu");
       }
    }
    else if (playerSelection == "scissors") {
-      alert("Congratulations! Scissors cuts Paper!");
-      return roundResults = "player";
+      keepScore("player");
    }
    else {
-      alert("Try again. Scissors cuts Paper.");
-      return roundResults = "cpu"
+      keepScore("cpu");
+   }
+}
+
+function keepScore(winner) {
+   if (winner = "player") {
+      ++playerScore;
+      roundResults.textContent = "You Win!";
+      humanScore.textContent = `player =${playerScore}`;
+   }
+   else if (winner = "cpu") {
+      ++cpuScore;
+      roundResults.textContent = "You Lose";
+      computerScore.textContent = `CPU =${cpuScore}`;
+   }
+   else {
+      roundResults.textContent = "Tie Round";
+   }
+   if (currentRound < 5) {
+      ++currentRound;
+      round.textContent = `Round ${currentRound}`;
+   }
+   else {
+      if (playerScore > cpuScore) {
+         gameResults.textContent = "You win the game!";
+      }
+      else if (cpuScore > playerScore) {
+         gameResults.textContent = "You lost the game";
+      }
+      else {
+         gameResults.textContent = "tie game"
+      }
    }
 }
